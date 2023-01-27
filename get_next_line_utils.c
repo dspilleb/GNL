@@ -6,11 +6,12 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:03:52 by dspilleb          #+#    #+#             */
-/*   Updated: 2022/10/23 15:04:03 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:07:04 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 size_t	ft_strlcpy(char *dest, char const *src, size_t size)
 {
@@ -71,17 +72,20 @@ char	*extract(char *str)
 {
 	char		*line;
 	size_t		i;
+	size_t		len;
 
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (str[i] && str[i - 1] != '\n')
+	while (str[i] && str[i] != '\n')
 		i++;
-	line = malloc(sizeof(char) * i + 1);
+	len = i + 1;
+	line = malloc(sizeof(char) * len + 1);
 	if (!line)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
-	while (str[i] && str[i - 1] != '\n')
+	while (i < len)
 	{
 		line[i] = str[i];
 		i++;
@@ -100,16 +104,19 @@ char	*ft_cleaner(char *tmp)
 	len = 0;
 	if (!tmp)
 		return (NULL);
-	while (tmp[len] && tmp[len - 1] != '\n')
-		len++;
-	new_stock = malloc(ft_strlen(tmp) - len + 1);
+	while (tmp[i] && tmp[i] != '\n')
+		i++;
+	len = ft_strlen(tmp) - i
+	new_stock = malloc(sizeof(char) * (len + 1));
 	if (!new_stock)
 		return (NULL);
-	while (tmp[i + len])
+	len = 0;
+	while (tmp[i + 1 + len])
 	{
-		new_stock[i] = tmp[i + len];
+		new_stock[len] = tmp[i + 1 + len];
 		i++;
 	}
+	new_stock[len] = '\0';
 	free(tmp);
 	return (new_stock);
 }

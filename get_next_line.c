@@ -6,13 +6,17 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/26 16:01:44 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:51:16 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "get_next_line.h"
 //#define BUFFER_SIZE 1
+#include <fcntl.h>
+
+
+// clean tout lorsque crash TOUT VERIF
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -38,37 +42,34 @@ char	*free_join(char *stock, char *buffer, ssize_t tmp2)
 {
 	char	*temp;
 
-	if (buffer)
-		if (ft_strlen(buffer) == 0)
-			return (NULL);
 	if (stock)
-	{
-		temp = ft_strjoin("", stock);
-		stock = ft_strjoin(temp, buffer);
-	}
+    {
+        temp = ft_strjoin(stock, buffer);
+        free (stock);
+		if (!temp)
+			return (NULL);
+        return(temp);
+    }
 	else
-	{
-		temp = malloc(sizeof(char) * (tmp2 + 1));
-		stock = ft_strjoin(temp, buffer);
-	}
-	free(temp);
+        stock = ft_strjoin("", buffer);
+	if (!stock)
+		return (NULL);
 	return (stock);
 }
 
 char	*get_next_line(int fd)
 {
-	static ssize_t	tmp2;
-	char			*line;
-	char			*tmp;
-	char			buffer[BUFFER_SIZE + 1];
-	static char		*stock;
+	ssize_t		tmp2;
+	char		*line;
+	char		buffer[BUFFER_SIZE + 1];
+	static char	*stock;
 
-	if (tmp2 < 0 || BUFFER_SIZE <= 0 || fd <= 0)
+	if (BUFFER_SIZE <= 0 || fd <= 0)
 		return (NULL);
 	while (!stock || !ft_strrchr(stock, '\n'))
 	{
 		tmp2 = read(fd, &buffer, BUFFER_SIZE);
-		if (tmp2 > 0)
+		if (tmp2 == -1)
 			return (NULL);
 		if (tmp2 == 0)
 			break ;
@@ -77,29 +78,26 @@ char	*get_next_line(int fd)
 		if (!stock)
 			return (NULL);
 	}
-	printf("%s", stock);
 	line = extract(stock);
-	tmp = ft_cleaner(stock);
-	ft_strlcpy(stock, tmp, ft_strlen(tmp) + 1);
-	free (tmp);
-	tmp2 -= 1;
+	stock = ft_cleaner(stock);
+	if (tmp2 == 0)
+		free (stock);
 	return (line);
 }
-/*
-#include <fcntl.h>
 
 int	main(void)
 {
+	int flag = 0;
 	int	fd;
-	char *line;
-	fd = open("text.txt", O_RDONLY);
-	while (!line)
+	char *line = NULL;
+	fd = open("test.txt", O_RDONLY);
+	while (!flag)
 	{
 		line = get_next_line(fd);
-		if (!line)
+		if (line == NULL)
 			return (0);
 		printf("Ligne  : %s",line);
-		free (line);
 	}
+	close(fd);
 	return (0);
-}*/
+}
