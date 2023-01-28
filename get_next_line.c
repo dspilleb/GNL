@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/27 17:51:16 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:00:18 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "get_next_line.h"
 //#define BUFFER_SIZE 1
 #include <fcntl.h>
-
-
-// clean tout lorsque crash TOUT VERIF
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -38,20 +35,20 @@ char	*ft_strrchr(const char *s, int c)
 		return (NULL);
 }
 
-char	*free_join(char *stock, char *buffer, ssize_t tmp2)
+char	*free_join(char *stock, char *buffer)
 {
 	char	*temp;
 
 	if (stock)
-    {
-        temp = ft_strjoin(stock, buffer);
-        free (stock);
+	{
+		temp = ft_strjoin(stock, buffer);
+		free (stock);
 		if (!temp)
 			return (NULL);
-        return(temp);
-    }
+		return (temp);
+	}
 	else
-        stock = ft_strjoin("", buffer);
+		stock = ft_strjoin("", buffer);
 	if (!stock)
 		return (NULL);
 	return (stock);
@@ -64,7 +61,7 @@ char	*get_next_line(int fd)
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*stock;
 
-	if (BUFFER_SIZE <= 0 || fd <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	while (!stock || !ft_strrchr(stock, '\n'))
 	{
@@ -74,17 +71,15 @@ char	*get_next_line(int fd)
 		if (tmp2 == 0)
 			break ;
 		buffer[tmp2] = '\0';
-		stock = free_join(stock, buffer, tmp2);
+		stock = free_join(stock, buffer);
 		if (!stock)
 			return (NULL);
 	}
 	line = extract(stock);
-	stock = ft_cleaner(stock);
-	if (tmp2 == 0)
-		free (stock);
+	stock = ft_cleaner(stock, line);
 	return (line);
 }
-
+/*
 int	main(void)
 {
 	int flag = 0;
@@ -94,10 +89,11 @@ int	main(void)
 	while (!flag)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
-			return (0);
+		if(!line)
+			return(0);
 		printf("Ligne  : %s",line);
+		free(line);
 	}
 	close(fd);
 	return (0);
-}
+}*/

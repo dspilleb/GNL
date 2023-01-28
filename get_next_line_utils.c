@@ -6,12 +6,11 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:03:52 by dspilleb          #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:04 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/28 18:55:36 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 size_t	ft_strlcpy(char *dest, char const *src, size_t size)
 {
@@ -68,55 +67,47 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*extract(char *str)
+char	*extract(char *stock)
 {
 	char		*line;
-	size_t		i;
 	size_t		len;
 
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	len = i + 1;
+	len = 0;
+	if (!stock)
+		return (NULL);
+	while (stock[len] && stock[len] != '\n')
+		len++;
+	if (stock[len] == '\n')
+		len++;
 	line = malloc(sizeof(char) * len + 1);
 	if (!line)
 	{
-		free(str);
+		free(stock);
 		return (NULL);
 	}
-	i = 0;
-	while (i < len)
-	{
-		line[i] = str[i];
-		i++;
-	}
-	line[i] = '\0';
+	ft_strlcpy(line, stock, len + 1);
 	return (line);
 }
 
-char	*ft_cleaner(char *tmp)
+char	*ft_cleaner(char *stock, char *line)
 {
-	size_t		i;
-	size_t		len;
+	size_t		start;
+	size_t		end;
 	char		*new_stock;
 
-	i = 0;
-	len = 0;
-	if (!tmp)
+	if (!stock)
 		return (NULL);
-	while (tmp[i] && tmp[i] != '\n')
-		i++;
-	len = ft_strlen(tmp) - i
-	new_stock = malloc(sizeof(char) * (len + 1));
+	start = ft_strlen(line);
+	end = ft_strlen(stock);
+	if (end - start == 0)
+	{
+		free(stock);
+		return (NULL);
+	}
+	new_stock = malloc(sizeof(char) * (end - start) + 1);
 	if (!new_stock)
 		return (NULL);
-	len = 0;
-	while (tmp[i + 1 + len])
-	{
-		new_stock[len] = tmp[i + 1 + len];
-		i++;
-	}
-	new_stock[len] = '\0';
-	free(tmp);
+	ft_strlcpy(new_stock, &stock[start], 1 + (end - start));
+	free(stock);
 	return (new_stock);
 }

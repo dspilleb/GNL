@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:55:22 by dspilleb          #+#    #+#             */
-/*   Updated: 2022/10/23 11:35:06 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/28 18:54:31 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 char	*get_next_line(int fd);
 char	*ft_strrchr(const char *s, int c);
-char	*extract(char *str);
-char	*ft_cleaner(char *tmp);
+char	*extract(char *stock);
+char	*ft_cleaner(char *stock, char *line);
 size_t	ft_strlen(char const *str);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*free_join(char *stock, char *buffer, ssize_t tmp2);
+char	*free_join(char *stock, char *buffer);
 size_t	ft_strlcpy(char *dest, char const *src, size_t size);
 
 #endif
