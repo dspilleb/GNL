@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/28 19:00:18 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/29 23:05:46 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
-	int	address;
+	long long	i;
+	long long	address;
 
 	i = -1;
 	address = -1;
@@ -43,14 +43,10 @@ char	*free_join(char *stock, char *buffer)
 	{
 		temp = ft_strjoin(stock, buffer);
 		free (stock);
-		if (!temp)
-			return (NULL);
 		return (temp);
 	}
 	else
 		stock = ft_strjoin("", buffer);
-	if (!stock)
-		return (NULL);
 	return (stock);
 }
 
@@ -58,25 +54,35 @@ char	*get_next_line(int fd)
 {
 	ssize_t		tmp2;
 	char		*line;
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	static char	*stock;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
 	while (!stock || !ft_strrchr(stock, '\n'))
 	{
-		tmp2 = read(fd, &buffer, BUFFER_SIZE);
+		tmp2 = read(fd, buffer, BUFFER_SIZE);
 		if (tmp2 == -1)
+		{
+			free (buffer);
 			return (NULL);
+		}
 		if (tmp2 == 0)
 			break ;
 		buffer[tmp2] = '\0';
 		stock = free_join(stock, buffer);
 		if (!stock)
+		{
+			free (buffer);
 			return (NULL);
+		}
 	}
 	line = extract(stock);
 	stock = ft_cleaner(stock, line);
+	free (buffer);
 	return (line);
 }
 /*

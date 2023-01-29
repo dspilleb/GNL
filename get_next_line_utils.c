@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:03:52 by dspilleb          #+#    #+#             */
-/*   Updated: 2023/01/28 18:55:36 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/29 23:06:54 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ size_t	ft_strlen(char const *str)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t		i;
 	size_t		end_s1;
 	size_t		end_s2;
 	char		*str;
 
-	i = 0;
 	if (!s1 || !s2)
 		return (NULL);
 	end_s1 = ft_strlen(s1);
@@ -58,12 +56,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, s1, end_s1 + 1);
-	while (i < end_s2)
-	{
-		str[end_s1 + i] = s2[i];
-		i++;
-	}
-	str[end_s1 + i] = '\0';
+	ft_strlcpy(&str[end_s1], s2, end_s2 + 1);
 	return (str);
 }
 
@@ -106,7 +99,10 @@ char	*ft_cleaner(char *stock, char *line)
 	}
 	new_stock = malloc(sizeof(char) * (end - start) + 1);
 	if (!new_stock)
+	{
+		free (stock);
 		return (NULL);
+	}
 	ft_strlcpy(new_stock, &stock[start], 1 + (end - start));
 	free(stock);
 	return (new_stock);
