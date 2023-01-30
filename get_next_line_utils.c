@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:03:52 by dspilleb          #+#    #+#             */
-/*   Updated: 2023/01/29 23:06:54 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/30 12:44:21 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_cleaner(char *stock, char *line)
 	end = ft_strlen(stock);
 	if (end - start == 0)
 	{
-		free(stock);
+		free (stock);
 		return (NULL);
 	}
 	new_stock = malloc(sizeof(char) * (end - start) + 1);

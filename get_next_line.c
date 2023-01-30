@@ -6,14 +6,11 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/29 23:05:46 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/30 12:49:49 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
-//#define BUFFER_SIZE 1
-#include <fcntl.h>
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -50,24 +47,18 @@ char	*free_join(char *stock, char *buffer)
 	return (stock);
 }
 
-char	*get_next_line(int fd)
+char	*read_new_line(int fd, char *stock, char *buffer)
 {
 	ssize_t		tmp2;
-	char		*line;
-	char		*buffer;
-	static char	*stock;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (NULL);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
 	while (!stock || !ft_strrchr(stock, '\n'))
 	{
 		tmp2 = read(fd, buffer, BUFFER_SIZE);
 		if (tmp2 == -1)
 		{
 			free (buffer);
+			if (stock)
+				free(stock);
 			return (NULL);
 		}
 		if (tmp2 == 0)
@@ -80,24 +71,45 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
+	free (buffer);
+	return (stock);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*buffer;
+	static char	*stock;
+
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (NULL);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	stock = read_new_line(fd, stock, buffer);
+	if (!stock)
+		return (NULL);
 	line = extract(stock);
 	stock = ft_cleaner(stock, line);
-	free (buffer);
 	return (line);
 }
 /*
 int	main(void)
 {
-	int flag = 0;
-	int	fd;
-	char *line = NULL;
+	int		fd;
+	char	*line;
+
+	line = NULL;
 	fd = open("test.txt", O_RDONLY);
-	while (!flag)
+	while (1)
 	{
 		line = get_next_line(fd);
-		if(!line)
-			return(0);
-		printf("Ligne  : %s",line);
+		if (!line)
+		{
+			close(fd);
+			return (0);
+		}
+		printf("Ligne : %s", line);
 		free(line);
 	}
 	close(fd);
