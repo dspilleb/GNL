@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/31 15:17:49 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:16:43 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
@@ -79,42 +79,31 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*buffer;
-	static char	*stock;
+	static char	*stock[FD_MAX];
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > FD_MAX)
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	stock = read_new_line(fd, stock, buffer);
-	if (!stock)
+	stock[fd] = read_new_line(fd, stock[fd], buffer);
+	if (!stock[fd])
 		return (NULL);
-	line = extract(stock);
-	stock = ft_cleaner(stock, line);
+	line = extract(stock[fd]);
+	stock[fd] = ft_cleaner(stock[fd], line);
 	return (line);
 }
 /*
 int	main(void)
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
+	int		fd3;
 	char	*line;
 
 	line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	printf(" FD : %d", fd);
-	fd = open("test2.txt", O_RDONLY);
-	printf(" FD : %d", fd);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			close(fd);
-			return (0);
-		}
-		printf("Ligne : %s", line);
-		free(line);
-	}
-	close(fd);
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
 }*/
