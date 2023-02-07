@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:55:22 by dspilleb          #+#    #+#             */
-/*   Updated: 2023/01/31 15:16:51 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:09:30 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # define FD_MAX 1024
-//# include <fcntl.h>
-//# include <stdio.h>
 
 char	*get_next_line(int fd);
 char	*ft_strrchr(const char *s, int c);

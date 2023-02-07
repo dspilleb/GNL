@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/31 15:17:49 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:42:55 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,28 +93,3 @@ char	*get_next_line(int fd)
 	stock = ft_cleaner(stock, line);
 	return (line);
 }
-/*
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	printf(" FD : %d", fd);
-	fd = open("test2.txt", O_RDONLY);
-	printf(" FD : %d", fd);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			close(fd);
-			return (0);
-		}
-		printf("Ligne : %s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}*/

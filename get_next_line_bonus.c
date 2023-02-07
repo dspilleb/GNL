@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:46:53 by dan               #+#    #+#             */
-/*   Updated: 2023/01/31 15:16:43 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:42:06 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,3 @@ char	*get_next_line(int fd)
 	stock[fd] = ft_cleaner(stock[fd], line);
 	return (line);
 }
-/*
-int	main(void)
-{
-	int		fd1;
-	int		fd2;
-	int		fd3;
-	char	*line;
-
-	line = NULL;
-	close(fd1);
-	close(fd2);
-	close(fd3);
-	return (0);
-}*/

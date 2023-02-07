@@ -6,7 +6,7 @@
 /*   By: dspilleb <dspilleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:03:52 by dspilleb          #+#    #+#             */
-/*   Updated: 2023/01/31 15:04:32 by dspilleb         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:22:01 by dspilleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_cleaner(char *stock, char *line)
 	size_t		end;
 	char		*new_stock;
 
-	if (!stock)
+	if (!line)
 		return (NULL);
 	start = ft_strlen(line);
 	end = ft_strlen(stock);
@@ -101,6 +101,8 @@ char	*ft_cleaner(char *stock, char *line)
 	if (!new_stock)
 	{
 		free (stock);
+		free(line);
+		line = NULL;
 		return (NULL);
 	}
 	ft_strlcpy(new_stock, &stock[start], 1 + (end - start));
