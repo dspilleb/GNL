@@ -8,10 +8,10 @@
 
 <p align="center">
 	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/DanNoKenshi/GNL?color=lightblue" />
-	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/DanNoKenshi/GNL?color=critical" />
-	<img alt="Code language count" src="https://img.shields.io/github/languages/count/DanNoKenshi/GNL?color=yellow" />
-	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/DanNoKenshi/GNL?color=blue" />
-	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/DanNoKenshi/GNL?color=green" />
+	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/dspilleb/GNL?color=critical" />
+	<img alt="Code language count" src="https://img.shields.io/github/languages/count/dspilleb/GNL?color=yellow" />
+	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/dspilleb/GNL?color=blue" />
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/dspilleb/GNL?color=green" />
 </p>
 
 ## 💡 About the project
